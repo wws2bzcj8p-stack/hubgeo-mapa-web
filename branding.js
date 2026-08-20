@@ -86,6 +86,7 @@
       .hubgeo-remove{display:none!important}
       .hubgeo-screen-remove{display:none!important}
       .hubgeo-clean-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+      .hubgeo-province-badge{display:none!important}
       @media(max-width:820px){
         .top-company-logo{width:88px;height:42px;flex-basis:88px}
         .top strong{font-size:12px}
@@ -109,7 +110,7 @@
   function loadMapEnhancements() {
     if (document.querySelector('script[data-hubgeo-map-enhancements]')) return;
     const script = document.createElement('script');
-    script.src = 'map-enhancements.js?v=20260820-3';
+    script.src = 'map-enhancements.js?v=20260820-4';
     script.dataset.hubgeoMapEnhancements = 'true';
     document.body.appendChild(script);
   }
@@ -117,6 +118,7 @@
   function install() {
     addStyles();
     addBranding();
+    document.querySelectorAll('.hubgeo-province-badge').forEach(node => node.remove());
     const body = document.getElementById('mbody');
     if (body) {
       new MutationObserver(cleanDetails).observe(body, { childList: true, subtree: true });
