@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>HUBGEO | Prévia limpa</title>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eef3f7}#appframe{display:block;width:100%;height:100%;border:0;background:#eef3f7}</style>
+</head>
+<body>
+<iframe id="appframe" src="index.html?clean=20260820" title="HUBGEO - Prévia limpa"></iframe>
+<script>
+const frame=document.getElementById('appframe');
+frame.addEventListener('load',()=>{
+  try{
+    const doc=frame.contentDocument;
+    if(!doc)return;
+    const removeOld=()=>doc.querySelectorAll('.hubgeo-province-badge').forEach(node=>node.remove());
+    removeOld();
+    new MutationObserver(removeOld).observe(doc.documentElement,{childList:true,subtree:true});
+    const branding=doc.createElement('script');branding.src='branding-static-20260820.js';doc.body.appendChild(branding);
+    const markers=doc.createElement('script');markers.src='markers-only-20260820.js';doc.body.appendChild(markers);
+  }catch(e){console.error('Falha ao carregar a prévia limpa HUBGEO.',e)}
+});
+</script>
+</body>
+</html>
