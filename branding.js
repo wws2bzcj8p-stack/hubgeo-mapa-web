@@ -109,7 +109,7 @@
   function loadMapEnhancements() {
     if (document.querySelector('script[data-hubgeo-map-enhancements]')) return;
     const script = document.createElement('script');
-    script.src = 'map-enhancements.js?v=20260820-2';
+    script.src = 'map-enhancements.js?v=20260820-3';
     script.dataset.hubgeoMapEnhancements = 'true';
     document.body.appendChild(script);
   }
