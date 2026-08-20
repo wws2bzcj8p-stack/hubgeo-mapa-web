@@ -2,8 +2,13 @@
   let enhanced = false;
 
   const style = document.createElement('style');
+  style.id = 'hubgeo-map-enhancements-style';
   style.textContent = `
+    .hubgeo-province-badge{display:none!important}
     .hubgeo-point-marker{
+      opacity:1!important;
+      stroke-opacity:1!important;
+      pointer-events:auto!important;
       filter:drop-shadow(0 1px 2px rgba(11,45,74,.34));
       transition:opacity .18s ease,fill-opacity .18s ease,stroke-width .18s ease,r .18s ease;
     }
@@ -20,7 +25,12 @@
     return 7.6;
   }
 
+  function removeProvinceBadges() {
+    document.querySelectorAll('.hubgeo-province-badge').forEach(node => node.remove());
+  }
+
   function refreshPointMarkers() {
+    removeProvinceBadges();
     if (!map || !layer) return;
     const z = map.getZoom();
 
@@ -40,6 +50,7 @@
       const node = marker.getElement?.();
       if (node) {
         node.classList.add('hubgeo-point-marker');
+        node.style.opacity = '1';
         node.style.pointerEvents = 'auto';
       }
     });
@@ -48,6 +59,8 @@
   function install() {
     if (enhanced || typeof render !== 'function') return;
     enhanced = true;
+
+    removeProvinceBadges();
 
     const originalRender = render;
     render = function () {
@@ -59,6 +72,7 @@
       if (!map) return;
       clearInterval(waitForMap);
       map.on('zoomend', refreshPointMarkers);
+      map.on('moveend', refreshPointMarkers);
       refreshPointMarkers();
     }, 120);
   }
